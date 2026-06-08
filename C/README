@@ -1,0 +1,52 @@
+-----------
+ BRAINMAZE
+-----------
+
+Basic instructions. This program prints a maze to the stdout device.
+Use make to compile and link all code then test the program by typing
+    brainmaze q
+where q is the number of recursive levels you want the fractal to descend.
+I suggest levels between 2 and 5. I have successfully tested the program
+with q = 9 levels. I redirected output to a file. After a few minutes I
+ended up with a 1 Meg text file (which is a maze on a grid 1024x1024), so
+you can see that the maze size increases exponentially with the numbers of
+recursive levels you choose. If you execute
+    brainmaze 3
+you will get a nice demonstration that will fit on the screen.
+    brainmaze 5
+will generate a maze that will fit inside the 80-columns of a printer.
+
+I had a lot of trouble getting the math library to work with gcc. I
+finally discovered after much WORK that gcc does not like the POSIX
+code in the math.h header file. Convieniently, there is a conditional
+compile switch in the math.h header to turn off the POSIX section of the
+header file. All that you need to do is
+    #define _POSIX_SOURCE 1
+somewhere BEFORE you #include<math.h>. After that everything is nice. You
+just need to put -lm at the end of the gcc link line in he makefile. This
+links the math library.
+
+My program demonstrates a technique for generating a maze using a
+DIVE-AND-CONQUER recursive fractal technique. I call this algorithm 
+The Brain Maze(tm) since it resembles those pictures of the brain that
+you often see in medical textbooks on cranial invasive surgical techniques.
+It is physiologically impossible to explain the complete operation of the
+Brain Maze(tm) algorithm in a simple 7-bit ASCII text file; nevertheless,
+I shall endevour to excrete some intuitive understanding of the basic
+operation of this algorithm.
+
+Given a blank slate, a sheet of paper, a universe, or what-have-you, you
+can divide this into four sections. These four sections can then be
+further quartered. Continue quartering your slate, paper, universe until
+you become very very tired. Then take one of the smallet elements that you
+have and divide it into nine (3x3) sections. This will be your elemental
+maze. There are size possible elemental mazes that can be drawn on a 3x3
+grid. They look like U or H or rotations of these. You then chose one
+of these six mazes and put it on your 3x3 grid. Do this for all the
+quarterings that you have generated. Then each group of four elemental mazes
+are combined at three places. Then each group of group of four are
+combined, then each group of group of group of four, and so on until your
+completely fill your slate, paper, universe...
+
+- Noah Spurrier
+
